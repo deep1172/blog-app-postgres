@@ -1,7 +1,7 @@
 // index.js
 import express from 'express';
 import dotenv from 'dotenv';
-import { DBCon } from './libs/db.js'; // ⬅️ named import
+import DBCon  from './libs/db.js'; 
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
