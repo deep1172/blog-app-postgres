@@ -1,24 +1,20 @@
-import pg from 'pg';
-const { Pool } = pg;
-import dotenv from 'dotenv';
-dotenv.config();
+// libs/db.js
+import { Sequelize } from "sequelize";
 
-const pool = new Pool({
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
   host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: 5432,
+  dialect: "postgres",
 });
 
 const DBCon = async () => {
   try {
-    await pool.connect();
-    console.log('🟢 PostgreSQL is connected');
+    await sequelize.authenticate();
+    console.log("🟢 PostgreSQL connection has been established successfully.");
   } catch (error) {
-    console.error('🔴 Error connecting to DB:', error);
+    console.error("🔴 Unable to connect to the database:", error);
+    process.exit(1); // Optional: stop app if DB fails
   }
 };
 
+export { sequelize };
 export default DBCon;
-
